@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 
 function Home({ posts }) {
-  // 글이 없으면 - 글이 없습니다. 있으면 ul, li, 출력, Link 컴포넌트 활용
   let _posts = posts;
   _posts = _posts
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -17,7 +16,7 @@ function Home({ posts }) {
       <h2>소개</h2>
       <p>React Router로 목록/상세/작성/수정/삭제를 연습하는 미션입니다.</p>
       <h3>최신 글</h3>
-      <ul>{_posts.length === 0 ? "글이 없습니다." : _posts}</ul>
+      {_posts.length === 0 ? "게시물이 없습니다." : <ul>{_posts}</ul>}
     </section>
   );
 }

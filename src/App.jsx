@@ -12,12 +12,14 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("./data/blog.json")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
+    fetch("/data/blog.json")
+      .then((r) => {
+        if (!r) {
+          throw new Error(`데이터 불러오기 실패! 데이터가 없거나 경로가 올바르지 않습니다.`);
+        } else if (r.ok) {
+          return r.json();
         } else {
-          throw new Error(`데이터 불러오기 실패! 에러${response.status}: ${response.statusText}`);
+          throw new Error(`데이터 불러오기 실패! 에러${r.status}: ${r.statusText}`);
         }
       })
       .then((result) => {
@@ -27,13 +29,17 @@ function App() {
       .catch();
   }, []);
 
+  const handleDelete = (id) => {
+    setPosts((prev) => prev.filter((p) => p.id !== id));
+  };
+
   return (
     <>
       <Routes>
         <Route path="/" element={<Layout loaded={loaded} />}>
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
-          <Route path="posts/:id" element={<PostDetail posts={posts} onDelete={""} />} />
+          <Route path="posts/:id" element={<PostDetail posts={posts} onDelete={handleDelete} />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

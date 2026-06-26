@@ -12,7 +12,8 @@ function Posts({ posts }) {
 
   return (
     <section>
-      <ul>{_posts}</ul>
+      <h2>게시물</h2>
+      {_posts.length === 0 ? "게시물이 없습니다." : <ul>{_posts}</ul>}
     </section>
   );
 }
