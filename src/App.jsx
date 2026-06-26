@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import NotFound from "./pages/NotFound";
+import PostNew from "./pages/PostNew";
+import PostEdit from "./pages/PostEdit";
 
 function App() {
   console.log("App 렌더됨");
@@ -42,6 +44,8 @@ function App() {
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
           <Route path="posts/:id" element={<PostDetail posts={posts} onDelete={handleDelete} />} />
+          <Route path="posts/:id/edit" element={<PostEdit />} />
+          <Route path="posts/new" element={<PostNew />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
