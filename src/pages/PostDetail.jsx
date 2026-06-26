@@ -1,6 +1,8 @@
 import { useNavigate, useParams } from "react-router";
 
 function PostDetail({ posts, onDelete }) {
+  console.log("PostDetail 렌더됨");
+
   const post = posts.find((p) => p.id === Number(useParams().id));
 
   const navigate = useNavigate();

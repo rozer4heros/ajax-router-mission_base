@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 
 function Home({ posts }) {
+  console.log("Home 렌더됨");
+
   let _posts = posts;
   _posts = _posts
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -15,7 +17,7 @@ function Home({ posts }) {
     <section>
       <h2>소개</h2>
       <p>React Router로 목록/상세/작성/수정/삭제를 연습하는 미션입니다.</p>
-      <h3>최신 글</h3>
+      <h2>최신 글</h2>
       {_posts.length === 0 ? "게시물이 없습니다." : <ul>{_posts}</ul>}
     </section>
   );

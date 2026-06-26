@@ -8,6 +8,8 @@ import PostDetail from "./pages/PostDetail";
 import NotFound from "./pages/NotFound";
 
 function App() {
+  console.log("App 렌더됨");
+
   const [loaded, setLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
 

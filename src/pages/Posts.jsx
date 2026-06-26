@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 
 function Posts({ posts }) {
+  console.log("Posts 렌더됨");
+
   let _posts = posts;
   _posts = _posts
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 
 function NotFound() {
+  console.log("NotFound 렌더됨");
+
   return (
     <section>
       <h2>404: Page Not Found</h2>
