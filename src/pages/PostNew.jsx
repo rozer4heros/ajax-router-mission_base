@@ -1,12 +1,28 @@
-import { useNavigate } from "react-router";
+import { v4 as v4uuid } from "uuid";
 
-function PostNew() {
+function PostNew({ onCreate }) {
   console.log("PostNew 렌더됨");
-
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!e.target.title.value) {
+      alert("제목이 필요합니다!");
+      return;
+    }
+
+    const _id = v4uuid();
+    const _title = e.target.title.value;
+    const _content = e.target.content.value;
+    const time = new Date();
+    const year = time.getFullYear();
+    const month = String(time.getMonth() + 1).padStart(2, "0");
+    const date = String(time.getDate()).padStart(2, "0");
+    onCreate({
+      id: _id,
+      title: _title,
+      content: _content,
+      createdAt: `${year}-${month}-${date}`,
+    });
   };
 
   return (
@@ -15,11 +31,11 @@ function PostNew() {
       <form action="" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title"></label>
-          <input type="text" id="title" />
+          <input type="text" name="title" id="title" />
         </div>
         <div>
           <label htmlFor="content"></label>
-          <textarea id="content"></textarea>
+          <textarea name="content" id="content"></textarea>
         </div>
         <button>작성</button>
       </form>

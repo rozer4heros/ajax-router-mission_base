@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router";
 import "./App.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -15,6 +15,9 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
 
+  const navigate = useNavigate();
+
+  // fetch
   useEffect(() => {
     fetch("/data/blog.json")
       .then((r) => {
@@ -36,6 +39,21 @@ function App() {
   const handleDelete = (id) => {
     setPosts((prev) => prev.filter((p) => p.id !== id));
   };
+  const handleEdit = (id, _title, _content) => {
+    setPosts((prev) =>
+      prev.map((post) => (String(post.id) === id ? { ...post, title: _title, content: _content } : post)),
+    );
+    navigate(`posts/${id}`);
+    console.log(posts);
+  };
+  const handleCreate = (post) => {
+    setPosts((prev) => {
+      prev.push(post);
+      return prev;
+    });
+    navigate(`posts/${post.id}`);
+    console.log(posts);
+  };
 
   return (
     <>
@@ -44,8 +62,8 @@ function App() {
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
           <Route path="posts/:id" element={<PostDetail posts={posts} onDelete={handleDelete} />} />
-          <Route path="posts/:id/edit" element={<PostEdit />} />
-          <Route path="posts/new" element={<PostNew />} />
+          <Route path="posts/:id/edit" element={<PostEdit posts={posts} onEdit={handleEdit} />} />
+          <Route path="posts/new" element={<PostNew onCreate={handleCreate} />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 
 function PostDetail({ posts, onDelete }) {
   console.log("PostDetail 렌더됨");
@@ -8,14 +8,18 @@ function PostDetail({ posts, onDelete }) {
   //const post = posts.find((p) => p.id === Number(useParams().id));
   // ✅ 해결: useParams()를 먼저 독립적으로 호출
   const { id } = useParams();
-  const post = posts.find((p) => p.id === Number(id));
+  const post = posts.find((p) => String(p.id) === id);
 
   const navigate = useNavigate();
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    navigate(`/posts/${id}/edit`);
+  };
   const handleDelete = () => {
-    navigate("/posts");
-    onDelete(post?.id);
+    if (window.confirm("게시물을 삭제하시겠습니까?")) {
+      navigate("/posts");
+      onDelete(post?.id);
+    }
   };
 
   return (
